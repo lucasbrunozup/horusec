@@ -10,14 +10,14 @@ import (
 
 var _ = Describe("Run horusec CLI with version argument", func() {
 	var (
-		outBuffer  *gbytes.Buffer
-		session    *gexec.Session
-		err        error
+		outBuffer           *gbytes.Buffer
+		session             *gexec.Session
+		err                 error
 	)
 
 	BeforeEach(func() {
 		outBuffer = gbytes.NewBuffer()
-		session, err = gexec.Start(exec.Command("horusec", "version"), outBuffer, outBuffer)
+		session, err = gexec.Start(exec.Command("/bin/horusec", "version"), outBuffer, outBuffer)
 	})
 
 	It("execute command without error", func() {
@@ -26,6 +26,7 @@ var _ = Describe("Run horusec CLI with version argument", func() {
 	})
 
 	It("displays current version", func() {
+		Eventually(session).Should(gexec.Exit(0))
 		Eventually(outBuffer).Should(gbytes.Say("Actual version installed of the horusec is:"))
 	})
 })
