@@ -9,9 +9,11 @@ import (
 )
 
 var _ = Describe("Run horusec CLI with version argument", func() {
-	var outBuffer *gbytes.Buffer
-	var session *gexec.Session
-	var err error
+	var (
+		outBuffer  *gbytes.Buffer
+		session    *gexec.Session
+		err        error
+	)
 
 	BeforeEach(func() {
 		outBuffer = gbytes.NewBuffer()
