@@ -25,7 +25,7 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-#          - macOS-latest
+          - macOS-latest
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - uses: actions/checkout@v2
@@ -34,5 +34,12 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
-      - name: test-e2e
+
+      - name: test-e2e-${{ matrix.os }}
+        if: ${{ matrix.os == 'macos-latest' }}
+        uses: docker-practice/actions-setup-docker@master
+        run: go test -v ./e2e/...
+
+      - name: test-e2e-${{ matrix.os }}
+        if: ${{ matrix.os != 'macos-latest' }}
         run: go test -v ./e2e/...
