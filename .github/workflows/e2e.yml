@@ -33,14 +33,16 @@ jobs:
         with:
           submodules: true
 
-      - name: Setup golang
+      - name: Setup Golang
         uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
 
-      - name: Setup docker on MacOS
-        uses: docker-practice/actions-setup-docker@master
+      - name: Setup docker for MacOS
         if: ${{ matrix.os == 'macos-latest' }}
+        uses: docker-practice/actions-setup-docker@master
+        with:
+          docker_buildx: false
 
-      - name: test-e2e-${{ matrix.os }}
+      - name: Run e2e test for ${{ matrix.os }}
         run: go test -v ./e2e/...
