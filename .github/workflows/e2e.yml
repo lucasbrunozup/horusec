@@ -38,11 +38,9 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
-      - name: test-e2e-${{ matrix.os }}
-        if: ${{ matrix.os == 'macos-latest' }}
+      - name: Setup docker on MacOS
         uses: docker-practice/actions-setup-docker@master
-        run: go test -v ./e2e/...
+        if: ${{ matrix.os == 'macos-latest' }}
 
       - name: test-e2e-${{ matrix.os }}
-        if: ${{ matrix.os != 'macos-latest' }}
         run: go test -v ./e2e/...
